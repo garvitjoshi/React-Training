@@ -54,6 +54,9 @@
 	<script type="text/babel">
 		class EventEmitter{
 			_listeners = [];
+			constructor(){
+				this.triggerChange = this.triggerChange.bind(this);
+			}
 			subscribe(listenerFn){
 				this._listeners.push(listenerFn);
 			}
@@ -61,27 +64,34 @@
 				this._listeners.forEach(listenerFn => listenerFn());
 			}
 		}
-		class BugModel {
+		class BugModel extends EventEmitter{
 			name = '';
 			isClosed = false;
 
 			constructor(name){
+				super();
 				this.name = name;
 			}
 
 			toggle(){
 				this.isClosed = !this.isClosed;
+				this.triggerChange();
 			}
 		}
 		class BugsCollectionModel extends EventEmitter{
 			_list = [];
 			addNew(bugName){
 				let newBug = new BugModel(bugName);
+				newBug.subscribe(this.triggerChange);
 				this._list.push(newBug);
 				this.triggerChange();
 			}
 			getAll(){
 				return [...this._list];
+			}
+			removeClosed(){
+				this._list = this._list.filter(bug => !bug.isClosed);
+				this.triggerChange();
 			}
 		}
 
@@ -98,7 +108,7 @@
 				let { bug } = this.props; 
 				return(
 					<li>
-						<span  className="bugname" onClick={this.onBugNameClick}>{bug.name}</span>
+						<span  className={bug.isClosed ? 'bugname closed' : 'bugname'} onClick={this.onBugNameClick}>{bug.name}</span>
 						<div>[ {bug.isClosed.toString()} ]</div>
 						<div className="datetime">[Created At]</div>
 					</li>
@@ -110,6 +120,10 @@
 			constructor(props){
 				super(props);
 				this.onAddNewClick = this.onAddNewClick.bind(this);
+				this.onRemoveClosedClick = this.onRemoveClosedClick.bind(this);
+			}
+			onRemoveClosedClick(){
+				this.props.model.removeClosed();
 			}
 			onAddNewClick(){
 				let newBugName = this.txtBugNameRef.current.value;
@@ -146,7 +160,7 @@
 							<ol>
 								{bugItems}
 							</ol>
-							<input type="button" value="Remove Closed" />
+							<input type="button" value="Remove Closed" onClick={this.onRemoveClosedClick} />
 						</section>
 					</div>
 				)
