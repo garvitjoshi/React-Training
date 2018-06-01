@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>State Manager - INtro</title>
-	<script src="stateManager.js"></script>
+	<script src="redux.js"></script>
 	<script src="react.js"></script>
 	<script src="react-dom.js"></script>
 	<script src="babel.min.js"></script>
@@ -19,18 +19,7 @@
 			},
 		};
 
-		function bindActionCreators(spinnerActionCreators, dispatch){
-			return {
-				increment(){
-					var action = spinnerActionCreators.increment();
-					dispatch(action);
-				},
-				decrement(){
-					var action = spinnerActionCreators.decrement();
-					dispatch(action);
-				}
-			}
-		}
+
 
 		
 
@@ -77,9 +66,9 @@
 			return currentState;
 		}
 
-		var store = SM.createStore(spinnerReducer);
+		var store = Redux.createStore(spinnerReducer);
 
-		var spinnerActions = bindActionCreators(spinnerActionCreators, store.dispatch);
+		var spinnerActions = Redux.bindActionCreators(spinnerActionCreators, store.dispatch);
 		
 		store.subscribe(renderApp);
 		function renderApp(){

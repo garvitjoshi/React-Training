@@ -19,17 +19,15 @@
 			},
 		};
 
-		function bindActionCreators(spinnerActionCreators, dispatch){
-			return {
-				increment(){
-					var action = spinnerActionCreators.increment();
-					dispatch(action);
-				},
-				decrement(){
-					var action = spinnerActionCreators.decrement();
+		function bindActionCreators(actionCreators, dispatch){
+			var actions = {};
+			for(let key in actionCreators){
+				actions[key] = function(){
+					let action = actionCreators[key].apply(undefined, arguments);
 					dispatch(action);
 				}
 			}
+			return actions;
 		}
 
 		

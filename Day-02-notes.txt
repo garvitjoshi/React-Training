@@ -1,0 +1,8 @@
+function bugsReducer(currentState = [], action){
+	if (action.type === 'ADD_NEW'){
+		let newBug = action.payload;
+		currentState.push(newBug);
+		return currentState;
+	}
+	return currentState;
+}

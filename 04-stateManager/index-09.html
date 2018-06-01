@@ -19,18 +19,7 @@
 			},
 		};
 
-		function bindActionCreators(spinnerActionCreators, dispatch){
-			return {
-				increment(){
-					var action = spinnerActionCreators.increment();
-					dispatch(action);
-				},
-				decrement(){
-					var action = spinnerActionCreators.decrement();
-					dispatch(action);
-				}
-			}
-		}
+
 
 		
 
@@ -79,7 +68,7 @@
 
 		var store = SM.createStore(spinnerReducer);
 
-		var spinnerActions = bindActionCreators(spinnerActionCreators, store.dispatch);
+		var spinnerActions = SM.bindActionCreators(spinnerActionCreators, store.dispatch);
 		
 		store.subscribe(renderApp);
 		function renderApp(){

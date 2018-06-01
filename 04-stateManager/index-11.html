@@ -9,43 +9,34 @@
 	<script src="babel.min.js"></script>
 	<script type="text/babel">
 		var spinnerActionCreators = {
-			increment(){
-				var action = {type : 'INCREMENT'};
+			increment(delta){
+				var action = {type : 'INCREMENT', payload : delta};
 				return action;	
 			},
-			decrement(){
-				var action = {type : 'DECREMENT'};
+			decrement(delta){
+				var action = {type : 'DECREMENT', payload : delta};
 				return action;
 			},
 		};
 
-		function bindActionCreators(spinnerActionCreators, dispatch){
-			return {
-				increment(){
-					var action = spinnerActionCreators.increment();
-					dispatch(action);
-				},
-				decrement(){
-					var action = spinnerActionCreators.decrement();
-					dispatch(action);
-				}
-			}
-		}
+
 
 		
 
-		{/*class Spinner extends React.Component{
+		class Spinner extends React.Component{
+			state={ delta : 1};
 			render(){
 				let { value, increment, decrement } = this.props;
 				return(
 					<div>
-						<input type="button" value="DECREMENT" onClick={decrement}/>
+						<input type="number" onChange={evt => this.setState({delta : evt.target.valueAsNumber})} />
+						<input type="button" value="DECREMENT" onClick={() => decrement(this.state.delta)}/>
 						<span> [ {value} ] </span>
-						<input type="button" value="INCREMENT" onClick={increment}/>
+						<input type="button" value="INCREMENT" onClick={() => increment(this.state.delta)}/>
 					</div>
 				)
 			}
-		}*/}
+		}
 
 		{/*let Spinner = (props) => {
 			let { value, increment, decrement } = props;
@@ -60,26 +51,26 @@
 
 
 		{/* Higher Order Component */}
-		let Spinner = ({ value, increment, decrement }) => (
+		{/*let Spinner = ({ value, increment, decrement }) => (
 			<div>
 				<input type="button" value="DECREMENT" onClick={decrement}/>
 				<span> [ {value} ] </span>
 				<input type="button" value="INCREMENT" onClick={increment}/>
 			</div>
-		);
+		);*/}
 		
 
 		function spinnerReducer(currentState = 0, action){
 			if (action.type === 'INCREMENT')
-				return ++currentState;
+				return currentState + action.payload;
 			if (action.type === 'DECREMENT')
-				return --currentState;
+				return currentState - action.payload;
 			return currentState;
 		}
 
 		var store = SM.createStore(spinnerReducer);
 
-		var spinnerActions = bindActionCreators(spinnerActionCreators, store.dispatch);
+		var spinnerActions = SM.bindActionCreators(spinnerActionCreators, store.dispatch);
 		
 		store.subscribe(renderApp);
 		function renderApp(){
