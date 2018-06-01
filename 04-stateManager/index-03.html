@@ -19,7 +19,7 @@
 			}
 		};
 
-		
+
 		class Spinner extends React.Component{
 			
 			constructor(props){
@@ -30,15 +30,15 @@
 
 			onIncrementClick(){
 				var action = this.props.actionCreators.increment();
-				this.props.store.dispatch(action);
+				this.props.dispatch(action);
 			}
 
 			onDecrementClick(){
 				var action = this.props.actionCreators.decrement();
-				this.props.store.dispatch(action);
+				this.props.dispatch(action);
 			}
 			render(){
-				let value = this.props.store.getState();
+				let { value } = this.props;
 				return(
 					<div>
 						<input type="button" value="DECREMENT" onClick={this.onDecrementClick}/>
@@ -61,7 +61,8 @@
 		
 		store.subscribe(renderApp);
 		function renderApp(){
-			ReactDOM.render(<Spinner store={store} actionCreators={spinnerActionCreators}/>,
+			var value = store.getState();
+			ReactDOM.render(<Spinner value={value} dispatch={store.dispatch} actionCreators={spinnerActionCreators}/>,
 				document.getElementById('root'));
 		}
 		renderApp()
