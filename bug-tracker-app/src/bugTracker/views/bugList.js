@@ -7,7 +7,7 @@ export class BugList extends Component{
 		this.onRemoveClosedClick = this.onRemoveClosedClick.bind(this);
 	}
 	onRemoveClosedClick(){
-		this.props.removeClosed(this.props.bugs);
+		this.props.removeClosed();
 	}
 	render(){
 		let { bugs } = this.props;

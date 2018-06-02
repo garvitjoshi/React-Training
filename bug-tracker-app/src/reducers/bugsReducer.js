@@ -1,4 +1,7 @@
 export function bugsReducer(currentState = [], action){
+	if (action.type === 'INIT'){
+		return action.payload;
+	}
 	if (action.type === 'ADD_NEW'){
 		let newBug = action.payload;
 		let newState = [...currentState, newBug];

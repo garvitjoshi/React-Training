@@ -13,7 +13,7 @@ export class BugSort extends Component{
 		let sortBy = this.selectSortBy.current.value,
 			isDescending = this.chkDescending.current.checked;
 		if (sortBy)
-			this.props.sort(this.props.bugs, sortBy, isDescending);
+			this.props.sort(sortBy, isDescending);
 	}
 	
 	render(){

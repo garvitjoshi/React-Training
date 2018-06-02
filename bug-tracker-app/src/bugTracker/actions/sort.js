@@ -12,11 +12,14 @@ function getComparerFor(attrName){
     }
 }
 
-export function sort(bugs, sortBy, isDescending = false){
-	let comparer = getComparerFor(sortBy);
-	if (isDescending)
-		comparer = getDescendingComparerFor(comparer);
-	bugs.sort(comparer);
-	let action = { type : 'REPLACE', payload : bugs};
-	return action;
+export function sort(sortBy, isDescending = false){
+	return function(dispatch, getState){
+		let comparer = getComparerFor(sortBy);
+		if (isDescending)
+			comparer = getDescendingComparerFor(comparer);
+		let bugs = getState().bugsData;
+		bugs.sort(comparer);
+		let action = { type : 'REPLACE', payload : bugs};
+		dispatch(action);
+	}
 }

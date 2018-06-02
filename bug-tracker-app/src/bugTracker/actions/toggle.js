@@ -1,5 +1,10 @@
+import axios from 'axios';
+
 export function toggle(bugToToggle){
-	let toggledBug = {...bugToToggle, isClosed : !bugToToggle.isClosed};
-	let action = { type : 'UPDATE', payload : { oldBug : bugToToggle, newBug : toggledBug}};
-	return action;
+	return function(dispatch){
+		let toggledBugData = {...bugToToggle, isClosed : !bugToToggle.isClosed};
+		axios.put('http://localhost:3030/bugs/' + toggledBugData.id, toggledBugData)
+			.then(response => response.data)
+			.then(toggledBug => dispatch({type : 'UPDATE', payload : {oldBug : bugToToggle, newBug : toggledBug}}));
+	}
 }

@@ -8,6 +8,9 @@ import Spinner from './spinner';
 
 import './index.css';
 
+import axios from 'axios';
+
+window['axios'] = axios;
 
 
 
