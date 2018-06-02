@@ -103,7 +103,7 @@
 		}
 
 		{/* Component */}
-		class BugItem extends React.Component{
+		class BugItem extends React.PureComponent{
 			constructor(props){
 				super(props);
 				this.onBugNameClick = this.onBugNameClick.bind(this);
@@ -112,6 +112,7 @@
 				this.props.toggle(this.props.bug);
 			}
 			render(){
+				console.log('Bug Item render');
 				let { bug } = this.props; 
 				return(
 					<li>
