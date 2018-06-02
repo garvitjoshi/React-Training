@@ -60,7 +60,8 @@
 				return newState;
 			}
 			if (action.type === 'UPDATE'){
-				let newState = currentState.map(bug => bug === payload.oldBug ? payload.newBug : bug);
+				let {oldBug, newBug} = action.payload;
+				let newState = currentState.map(bug => bug === oldBug ? newBug : bug);
 				return newState;
 			}
 			if (action.type === 'REMOVE'){
@@ -77,8 +78,7 @@
 				this.onBugNameClick = this.onBugNameClick.bind(this);
 			}
 			onBugNameClick(){
-				//this.props.bug.toggle();
-				//console.log(this.props.bug, ' is toggled ');
+				this.props.toggle(this.props.bug);
 			}
 			render(){
 				let { bug } = this.props; 
@@ -99,7 +99,7 @@
 				this.onRemoveClosedClick = this.onRemoveClosedClick.bind(this);
 			}
 			onRemoveClosedClick(){
-				//this.props.model.removeClosed();
+				this.props.removeClosed(this.props.model);
 			}
 			onAddNewClick(){
 				let newBugName = this.txtBugNameRef.current.value;
@@ -108,7 +108,7 @@
 			render(){
 				let { model : bugs } = this.props,
 					bugItems = bugs.map((bug, index) => (
-						<BugItem bug={bug} key={index} />
+						<BugItem bug={bug} key={index} toggle={this.props.toggle}/>
 					));
 				return(
 					<div>
