@@ -1,0 +1,16 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "file:///C:/Users/gajoshi/Desktop/react_training/Adobe-React-May-2018-2/04-stateManager/index.html",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
+http://bit.ly/react-training-videos
